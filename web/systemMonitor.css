@@ -1,0 +1,199 @@
+#sys-monitor-root {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 4px;
+    padding: 0 4px 0 0;
+	margin-right: -8px;
+    user-select: none;
+}
+
+.sys-monitor {
+    display: flex;
+    align-items: center;
+    position: relative;
+    min-width: 80px;
+    min-height: 34px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    cursor: default;
+}
+
+.sys-monitor.hidden {
+    display: none;
+}
+
+.sys-monitor .sys-label-name,
+.sys-monitor .sys-label-value {
+    position: absolute;
+    font-weight: 700;
+    color: #fff;
+    z-index: 2;
+    pointer-events: none;
+    text-shadow:
+        0 0 3px rgba(0, 0, 0, 1),
+        0 0 6px rgba(0, 0, 0, 0.8),
+        0 1px 2px rgba(0, 0, 0, 1);
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.sys-monitor .sys-label-name {
+    top: 11px;
+    left: 5px;
+    font-size: 10px;
+}
+
+.sys-monitor .sys-label-value {
+    bottom: 11px;
+    right: 5px;
+    font-size: 11px;
+}
+
+.sys-monitor .sys-slider {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    border-radius: 4px 0 0 4px;
+    transition: width 0.8s ease-out;
+    z-index: 1;
+}
+
+.sys-monitor.cpu .sys-slider  { background: #08690f; }
+.sys-monitor.ram .sys-slider  { background: #0ba316; }
+.sys-monitor.disk .sys-slider { background: #c98114; }
+.sys-monitor.gpu .sys-slider  { background: #06559c; }
+.sys-monitor.vram .sys-slider { background: #0C86F4; }
+.sys-monitor.temp .sys-slider { background: #0AA015; }
+
+
+/* System Buttons */
+.sys-cleanup-buttons {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    margin-left: 8px;
+}
+
+.sys-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sys-btn svg {
+    pointer-events: none;
+}
+
+.sys-btn#btn-unload-models {
+    background: #07256b;
+    color: #eee;
+}
+
+.sys-btn#btn-free-memory {
+    background: #8a8615;
+    color: #eee;
+}
+
+.sys-btn#btn-settings {
+    background: #076b0f;
+    color: #eee;
+}
+
+.sys-btn#btn-restart-comfyui {
+    background: #872222;
+    color: #eee;
+}
+
+.sys-btn#btn-unload-models:hover {
+    background: #0b2c9e;
+    border: 1px solid rgba(255, 255, 255, 0.80);
+    color: #ffffff;
+}
+
+.sys-btn#btn-free-memory:hover {
+    background: #b0ac2e;
+    border: 1px solid rgba(255, 255, 255, 0.80);
+    color: #ffffff;
+}
+
+.sys-btn#btn-settings:hover {
+    background: #0a9114;
+    border: 1px solid rgba(255, 255, 255, 0.80);
+    color: #ffffff;
+}
+
+.sys-btn#btn-restart-comfyui:hover {
+    background: #ad2b2b;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    color: #ffffff;
+}
+
+/* Workflow Timer */
+#comfy-elapsed-timer {
+	padding: 0;
+	font-size: 0.75rem;
+	font-family: monospace;
+	font-weight: 700;
+	color: #fffff;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+	min-height: 34px;
+	width: 7rem;
+	box-sizing: border-box;
+	flex-shrink: 0;
+	opacity: 1;
+	transition: color 0.3s;
+	white-space: nowrap;
+	border: 1px solid rgba(255, 255, 255, 0.20);
+	border-radius: 4px;
+}
+
+/* Workflow Timer */
+#toast-animation-style {
+	@keyframes spin {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
+	}	
+}
+
+/* Hide subgraph breadcrumb if enabled */
+body.mt_cleanup_hide_subgraph .subgraph-breadcrumb {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Hide job progress panel if enabled */
+body.mt_cleanup_hide_jobprogress div.pointer-events-auto.flex.w-\[350px\].min-w-\[310px\] {
+    display: none !important;
+}
+
+body.mt_cleanup_hide_jobprogress div[class*="pointer-events-auto"][class*="w-[350px]"][class*="min-w-[310px]"] {
+    display: none !important;
+}
+
+body.mt_cleanup_hide_jobprogress div.pointer-events-auto.flex[class*="w-[350px]"]:has(div[class*="bg-interface-panel-job-progress"]) {
+    display: none !important;
+}
+
+/* Hide triangle alert icon if enabled */
+body.mt_cleanup_hide_error_triangle i.icon-\[lucide--triangle-alert\] {
+    display: none !important;
+}
+
+.actionbar-container {
+    padding-left: 0;
+}

@@ -2,7 +2,7 @@
 
 <p>A simple actionbar for ComfyUI.</p>
 
-<img width="700" alt="actionbar" src="https://github.com/mike420/ComfyUI_Actionbar/blob/main/img/bar.png">
+<img width="700" alt="actionbar" src="https://raw.githubusercontent.com/mike420/ComfyUI_Actionbar/refs/heads/main/img/bar.png">
 
 ## Installation
 

@@ -1,0 +1,15 @@
+.github/workflows/publish_action.yml
+.tracking
+LICENSE
+README.md
+__init__.py
+img/magic_mike.jpg
+img/bar.png
+img/panel.png
+monitor/collector.py
+monitor/gpu.py
+monitor/hardware.py
+monitor/routes.py
+web/systemMonitor.css
+web/systemMonitor.js
+pyproject.toml

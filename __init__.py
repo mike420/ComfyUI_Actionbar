@@ -1,0 +1,8 @@
+from .monitor.collector import monitor_instance
+from .monitor import routes
+
+NODE_CLASS_MAPPINGS = {}
+NODE_DISPLAY_NAME_MAPPINGS = {}
+
+WEB_DIRECTORY = "./web"
+__all__ = ["WEB_DIRECTORY"]

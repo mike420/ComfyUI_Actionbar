@@ -12,5 +12,5 @@ Repository = "https://github.com/mike420/ComfyUI_Actionbar"
 [tool.comfy]
 PublisherId = "mike420"
 DisplayName = "ComfyUI_Actionbar"
-Icon = "https://raw.githubusercontent.com/mike420/ComfyUI_Actionbar/refs/heads/main/img/magic_mike.jpg?token=GHSAT0AAAAAADZLQ7VUOHHL4Z42NEIKTTWK2OTVZZA"
+Icon = "https://raw.githubusercontent.com/mike420/ComfyUI_Actionbar/refs/heads/main/img/magic_mike.jpg"
 includes = [] 

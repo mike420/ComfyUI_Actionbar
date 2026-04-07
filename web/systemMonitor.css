@@ -60,7 +60,8 @@
     height: 100%;
     width: 0%;
     border-radius: 4px 0 0 4px;
-    transition: width 0.8s ease-out;
+    /* Added background to the transition list */
+    transition: width 0.8s ease-out, background 0.3s ease-in-out; 
     z-index: 1;
 }
 
@@ -147,7 +148,6 @@
 	font-size: 0.75rem;
 	font-family: monospace;
 	font-weight: 700;
-	color: #fffff;
 	display: flex;
     align-items: center;
     justify-content: center;
@@ -162,12 +162,24 @@
 	border-radius: 4px;
 }
 
-/* Workflow Timer */
-#toast-animation-style {
-	@keyframes spin {
-		from { transform: rotate(0deg); }
-		to { transform: rotate(360deg); }
-	}	
+@keyframes borderPulse {
+    0% {
+        border-color: rgba(255, 255, 255, 0.20);
+        box-shadow: 0 0 0px rgba(11, 140, 233, 0);
+    }
+    50% {
+        border-color: #0b8ce9;
+        box-shadow: 0 0 8px rgba(11, 140, 233, 0.4);
+    }
+    100% {
+        border-color: rgba(255, 255, 255, 0.20);
+        box-shadow: 0 0 0px rgba(11, 140, 233, 0);
+    }
+}
+
+#comfy-elapsed-timer.running {
+    animation: borderPulse 2s infinite ease-in-out;
+    border-color: #0b8ce9; /* Ensures it looks solid if animation is jittery */
 }
 
 /* Hide subgraph breadcrumb if enabled */
@@ -196,4 +208,96 @@ body.mt_cleanup_hide_error_triangle i.icon-\[lucide--triangle-alert\] {
 
 .actionbar-container {
     padding-left: 0;
+}
+
+
+/* Toast */
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
+.mt-toast-container {
+    position: fixed; 
+    bottom: 30px; 
+    left: 50%; 
+    transform: translateX(-50%) translateY(20px); 
+    color: white; 
+    padding: 10px 24px; 
+    border-radius: 25px; 
+    font-family: sans-serif; 
+    font-size: 13px; 
+    font-weight: 600; 
+    z-index: 10001; 
+    opacity: 0; 
+    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    pointer-events: none; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+
+.mt-toast-container.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0px);
+}
+
+.mt-toast-container.hide {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+}
+
+.mt-spinner {
+    margin-right: 10px; 
+    animation: spin 1s linear infinite;
+}
+
+.mt-toast-container {
+    pointer-events: auto; /* Changed from none to allow clicking the close button */
+    gap: 12px;
+}
+
+.mt-toast-close {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    margin-left: 4px;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+    opacity: 0.7;
+}
+
+.mt-toast-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    opacity: 1;
+}
+
+.mt-toast-close svg {
+    width: 14px;
+    height: 14px;
+}
+
+.mt-toast-restart {
+    background: rgba(11, 163, 22, 0.95;
+}
+
+.mt-toast-restart-inner {
+    display: flex; 
+	flex-direction: column; 
+	align-items: center; 
+	gap: 8px;
+}
+
+#mt-toast-refresh-btn {
+    background: white; 
+	color: black; 
+	border: none; 
+	padding: 4px 12px; 
+	border-radius: 4px; 
+	cursor: pointer; 
+	font-weight: bold; 
+	font-size: 11px;
 }

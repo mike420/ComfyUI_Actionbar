@@ -13,4 +13,19 @@ Repository = "https://github.com/mike420/ComfyUI_Actionbar"
 PublisherId = "mike420"
 DisplayName = "ComfyUI_Actionbar"
 Icon = "https://raw.githubusercontent.com/mike420/ComfyUI_Actionbar/refs/heads/main/img/magic_mike.jpg"
+[project]
+name = "ComfyUI_Actionbar"
+description = "A simple actionbar for ComfyUI."
+version = "1.0.1"
+license = {file = "LICENSE"} 
+
+[project.urls]
+Repository = "https://github.com/mike420/ComfyUI_Actionbar"
+#  Used by Comfy Registry https://registry.comfy.org
+"Bug Tracker" = "https://github.com/mike420/ComfyUI_Actionbar/issues"
+
+[tool.comfy]
+PublisherId = "mike420"
+DisplayName = "ComfyUI_Actionbar"
+Icon = "https://raw.githubusercontent.com/mike420/ComfyUI_Actionbar/refs/heads/main/img/magic_mike.jpg"
 includes = [] 

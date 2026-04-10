@@ -2,6 +2,8 @@ import { app } from "../../scripts/app.js";
 import { api } from "../../scripts/api.js";
 
 const EXTENSION_NAME = "MagicTools.SystemMonitor";
+const VERSION = "1.0.2"
+
 const WS_EVENT = "magictools.monitor";
 const API_BASE = "/magictools/monitor";
 
@@ -16,7 +18,7 @@ const ICON_UNLOAD = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none"
 const ICON_BRUSH = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.622 17.897-10.68-2.913"/><path d="M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z"/><path d="M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15"/></svg>`;
 const ICON_RESTART = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>`;
 const ICON_SETTINGS = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z\"/></svg>`;
-const spinnerIcon = `<svg class="mt-toast-spinner" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="3" fill="none" style="margin-right: 10px; animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2a10 10 0 0 1 10 10"></path></svg>`;
+const spinnerIcon = `<svg class="ab-toast-spinner" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="3" fill="none" style="margin-right: 10px; animation: spin 1s linear infinite;"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle><path d="M12 2a10 10 0 0 1 10 10"></path></svg>`;
 const closeIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
 
 let gpuList = [];
@@ -218,7 +220,8 @@ api.addEventListener(WS_EVENT, (event) => {
 app.registerExtension({
     name: EXTENSION_NAME,
     async setup() {
-        loadStylesheet();	
+        loadStylesheet();
+		
         const root = document.createElement("div");
         root.id = "sys-monitor-root";		
 		
@@ -278,7 +281,7 @@ app.registerExtension({
 		
 		const showToast = (message, type = "success", timeout = 4000, persistent = false) => {
 			const toast = document.createElement("div");
-			toast.className = "mt-toast-container";
+			toast.className = "ab-toast-container";
 			
 			// Create Content Span
 			const content = document.createElement("div");
@@ -289,7 +292,7 @@ app.registerExtension({
 
 			// Create Close Button
 			const closeBtn = document.createElement("div");
-			closeBtn.className = "mt-toast-close";
+			closeBtn.className = "ab-toast-close";
 			closeBtn.innerHTML = closeIcon;
 			
 			const dismiss = () => {
@@ -371,9 +374,9 @@ app.registerExtension({
 					try {
 						const resp = await fetch(window.location.href, { cache: "no-store" });
 						if (resp.ok) {
-							restartToast.className = "mt-toast-restart";
-							restartToast.innerHTML = `<div class="mt-toast-restart-inner"><span>✅ Server Online!</span><button id="mt-toast-refresh-btn">Refresh Page</button></div>`;
-							restartToast.querySelector("#mt-toast-refresh-btn").onclick = () => window.location.reload();
+							restartToast.className = "ab-toast-restart";
+							restartToast.innerHTML = `<div class="ab-toast-restart-inner"><span>✅ Server Online!</span><button id="ab-toast-refresh-btn">Refresh Page</button></div>`;
+							restartToast.querySelector("#ab-toast-refresh-btn").onclick = () => window.location.reload();
 							restartToast.style.pointerEvents = "auto";
 						} else { setTimeout(pollServer, 1500); }
 					} catch (err) { setTimeout(pollServer, 1500); }
@@ -413,8 +416,10 @@ app.registerExtension({
         api.addEventListener("execution_interrupted", () => stopTimer('cancel')); // Red
 
         // --- Image Compare Integration ---
-        api.addEventListener("mt.image_compare_preview", () => {
-            stopTimer(true); // Pause (White)
+        api.addEventListener("mt.image_compare_preview", (event) => {
+            // Check the detail for the isSkipping flag set by image_compare_pause.js
+            if (event.detail && event.detail.isSkipping) return; 
+            stopTimer(true); // Pause (Orange)
         });
 
         const originalFetch = window.fetch;
@@ -445,6 +450,22 @@ app.registerExtension({
             return path === "/" ? "Disk /" : `Disk ${path.length > 8 ? "..." + path.slice(-7) : path}`;
         };
         diskLabel = getDiskLabel(defaultDisk);
+
+
+		app.ui.settings.addSetting({ 
+		id: "MagicTools.Actionbar", 
+		name: `Version ${VERSION}`, 
+            type: () => {
+                const x = document.createElement('span')
+                const a = document.createElement('a')
+                a.innerText = "Report issues or request features"
+                a.href = "https://github.com/mike420/ComfyUI_Actionbar/issues"
+                a.target = "_blank"
+                a.style.paddingRight = "12px"
+                x.appendChild(a)
+                return x
+            },
+		});		
 
         Object.entries(UI_CLEANUP_MAP).forEach(([settingId, className]) => {
             app.ui.settings.addSetting({

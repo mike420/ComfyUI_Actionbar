@@ -2,9 +2,9 @@
 
 <p>A simple actionbar for ComfyUI.</p>
 
-<p style="text-align:center;"><img width="700" alt="actionbar" src="https://raw.githubusercontent.com/mike420/ComfyUI_Actionbar/refs/heads/main/img/bar.png">
-
-<img width="700" alt="settings" src="https://raw.githubusercontent.com/mike420/ComfyUI_Actionbar/refs/heads/main/img/panel.png"></p>
+<p style="text-align:center;"><img style="text-align:center;" width="700" alt="actionbar" src="https://raw.githubusercontent.com/mike420/ComfyUI_Actionbar/refs/heads/main/img/bar.png">
+<br>
+<img style="text-align:center;" width="700" alt="settings" src="https://raw.githubusercontent.com/mike420/ComfyUI_Actionbar/refs/heads/main/img/panel.png"></p>
 
 ## Installation
 

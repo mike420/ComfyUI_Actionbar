@@ -4,6 +4,8 @@
 
 <img width="700" alt="actionbar" src="https://raw.githubusercontent.com/mike420/ComfyUI_Actionbar/refs/heads/main/img/bar.png">
 
+<img width="700" alt="settings" src="https://raw.githubusercontent.com/mike420/ComfyUI_Actionbar/refs/heads/main/img/panel.png">
+
 ## Installation
 
 ### Comfy CLI (recommended)

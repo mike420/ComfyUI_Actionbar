@@ -15,7 +15,7 @@
     align-items: center;
     position: relative;
     min-width: 80px;
-    min-height: 34px;
+    min-height: 32px;
     border-radius: 4px;
     overflow: hidden;
     background: rgba(0, 0, 0, 0.3);
@@ -27,8 +27,8 @@
     display: none;
 }
 
-.sys-monitor .sys-label-name,
-.sys-monitor .sys-label-value {
+.sys-monitor > .sys-label-name,
+.sys-monitor > .sys-label-value {
     position: absolute;
     font-weight: 700;
     color: #fff;
@@ -42,14 +42,15 @@
     line-height: 1;
 }
 
-.sys-monitor .sys-label-name {
-    top: 11px;
+/* Ensure these are also specific */
+.sys-monitor > .sys-label-name {
+    top: 9px;
     left: 5px;
     font-size: 10px;
 }
 
-.sys-monitor .sys-label-value {
-    bottom: 11px;
+.sys-monitor > .sys-label-value {
+    bottom: 10px;
     right: 5px;
     font-size: 11px;
 }
@@ -145,42 +146,28 @@
 
 /* Workflow Timer */
 #comfy-elapsed-timer {
-	padding: 0;
-	font-size: 0.75rem;
-	font-family: monospace;
-	font-weight: 700;
-	display: flex;
+    padding: 0;
+    font-size: 0.75rem;
+    font-family: monospace;
+    font-weight: 700;
+    display: flex;
     align-items: center;
     justify-content: center;
-	min-height: 34px;
-	width: 7rem;
-	box-sizing: border-box;
-	flex-shrink: 0;
-	opacity: 1;
-	transition: color 0.3s;
-	white-space: nowrap;
-	border: 1px solid rgba(255, 255, 255, 0.20);
-	border-radius: 4px;
-}
-
-@keyframes borderPulse {
-    0% {
-        border-color: rgba(255, 255, 255, 0.20);
-        box-shadow: 0 0 0px rgba(11, 140, 233, 0);
-    }
-    50% {
-        border-color: #0b8ce9;
-        box-shadow: 0 0 8px rgba(11, 140, 233, 0.4);
-    }
-    100% {
-        border-color: rgba(255, 255, 255, 0.20);
-        box-shadow: 0 0 0px rgba(11, 140, 233, 0);
-    }
+    min-height: 32px;
+    width: 7rem;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    opacity: 1;
+    transition: color 0.3s;
+    white-space: nowrap;
+	border-width: 1px !important;
+    border-style: solid !important;
+    border-color: rgba(255, 255, 255, 0.2); 
+    border-radius: 4px !important;
 }
 
 #comfy-elapsed-timer.running {
-    animation: borderPulse 2s infinite ease-in-out;
-    border-color: #0b8ce9; /* Ensures it looks solid if animation is jittery */
+
 }
 
 /* Hide subgraph breadcrumb if enabled */
@@ -207,98 +194,70 @@ body.mt_cleanup_hide_error_triangle i.icon-\[lucide--triangle-alert\] {
     display: none !important;
 }
 
-/* .actionbar-container {
-    padding-left: 0;
-} */
+/* Hide Extension Manager button if enabled */
+body.mt_cleanup_hide_ext_manager div.pointer-events-auto.flex.h-12.shrink-0.items-center.rounded-lg.border.border-interface-stroke.bg-comfy-menu-bg.px-2.shadow-interface {
+    display: none !important;
+}
+/* Fallback more resilient selector 
+body.mt_cleanup_hide_ext_manager div[class*="bg-comfy-menu-bg"]:has(button[title="Manage Extensions"]) {
+    display: none !important;
+}*/
+#btn-open-manager {
+    background: #4a148c; /* Purple color to distinguish it */
+    color: #eee;
+    margin-left: 4px;
+    flex-shrink: 0;
+}
 
+#btn-open-manager:hover {
+    background: #6a1b9a;
+    border: 1px solid rgba(255, 255, 255, 0.80);
+    color: #ffffff;
+}
 
 /* Toast */
-@keyframes spin {
-	from { transform: rotate(0deg); }
-	to { transform: rotate(360deg); }
+.mt-toast-top-right { 
+	position: fixed;
+	top: 110px !important; 
+	right: 5px;
+	z-index: 10001 !important;
+	min-width: 20rem;
 }
 
-.ab-toast-container {
-    position: fixed; 
-    bottom: 30px; 
-    left: 50%; 
-    transform: translateX(-50%) translateY(20px); 
-    color: white; 
-    padding: 10px 24px; 
-    border-radius: 10px; 
-    font-family: sans-serif; 
-    font-size: 13px; 
-    font-weight: 600; 
-    z-index: 10001; 
-    opacity: 0; 
-    transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-    pointer-events: none; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
+.mt-toast-top-right > .p-toast-message-content > .p-toast-message-text {
+	flex-direction: row !important;
 }
 
-.ab-toast-container.show {
-    opacity: 0.8;
-    transform: translateX(-50%) translateY(0px);
-}
-
-.ab-toast-container.hide {
-    opacity: 0;
-    transform: translateX(-50%) translateY(10px);
-}
-
-.ab-spinner {
-    margin-right: 10px; 
-    animation: spin 1s linear infinite;
-}
-
-.ab-toast-container {
-    pointer-events: auto; /* Changed from none to allow clicking the close button */
-    gap: 12px;
-}
-
-.ab-toast-close {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 4px;
-    margin-left: 4px;
-    border-radius: 50%;
-    transition: background 0.2s ease;
-    opacity: 0.7;
-}
-
-.ab-toast-close:hover {
-    background: rgba(255, 255, 255, 0.2);
-    opacity: 1;
-}
-
-.ab-toast-close svg {
-    width: 14px;
-    height: 14px;
-}
-
-.ab-toast-restart {
-    background: rgba(11, 163, 22, 0.95;
-}
-
-.ab-toast-restart-inner {
-    display: flex; 
-	flex-direction: column; 
+/* Refresh Prompt */
+.mt-refresh-prompt { 
+	position: fixed; 
+	top: 20px; 
+	right: 20px; 
+	background: #2a2a2a; 
+	color: white; 
+	padding: 16px 20px; 
+	border-radius: 8px; 
+	box-shadow: 0 4px 12px rgba(0,0,0,0.5); 
+	z-index: 10000; 
+	display: flex; 
 	align-items: center; 
-	gap: 8px;
+	gap: 12px; 
+	font-family: system-ui; 
+	font-size: 14px;
 }
 
-#ab-toast-refresh-btn {
-    background: white; 
-	color: black; 
-	border: none; 
-	padding: 4px 12px; 
-	border-radius: 4px; 
-	cursor: pointer; 
-	font-weight: bold; 
-	font-size: 11px;
+.mt-refresh-prompt > .mt-btn-refresh {
+	background:#444; 
+	color:white; 
+	border:none; 
+	padding:4px 8px; 
+	cursor:pointer; 
+	border-radius:4px;
+}
+
+.mt-refresh-prompt > .mt-btn-dismiss {
+	background:transparent; 
+	color:#aaa; 
+	border:none; 
+	cursor:pointer;
 }

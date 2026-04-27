@@ -2,7 +2,7 @@ import { app } from "../../scripts/app.js";
 import { api } from "../../scripts/api.js";
 
 const EXTENSION_NAME = "MagicTools.SystemMonitor";
-const VERSION = "1.0.3"
+const VERSION = "1.0.4"
 
 const WS_EVENT = "magictools.monitor";
 const API_BASE = "/magictools/monitor";
@@ -397,7 +397,7 @@ app.registerExtension({
 			const settingsEl = document.getElementById("comfy-settings-btn") || document.querySelector(".comfy-settings-btn") || document.querySelector('button[title="Settings"]');
 			if (settingsEl) { settingsEl.click(); } 
             else { try { app.ui.settings.show(); } catch (err) { console.error("MagicTools: Settings failed."); } }
-		}, true);
+		}, true); 			
 
 		const restartBtn = createBtn("btn-restart-comfyui", ICON_RESTART, "Restart ComfyUI", async () => {
 			if (confirm("Are you sure you want to restart ComfyUI?")) {
@@ -481,12 +481,17 @@ app.registerExtension({
             stopTimer(true);
         });
 
+        // --- Pause Node Integration ---
+        api.addEventListener("pause_workflow", (event) => {
+            stopTimer(true);
+        });	
+
         const originalFetch = window.fetch;
         window.fetch = function() {
             const url = typeof arguments[0] === 'string' ? arguments[0] : '';
-            if (url.includes('/image_compare_pause/continue/')) {
+            if (url.includes('/image_compare_pause/continue/') || url.includes('/pause_workflow/continue/')) {
                 startTimer();
-            } else if (url.includes('/image_compare_pause/cancel')) {
+            } else if (url.includes('/image_compare_pause/cancel') || url.includes('/pause_workflow/cancel')) {
                 stopTimer('cancel'); 
             }
             return originalFetch.apply(this, arguments);
@@ -543,6 +548,30 @@ app.registerExtension({
                 if (current !== undefined && newVal !== current) showRefreshPrompt(); 
             } 
         });
+		
+		app.ui.settings.addSetting({
+			id: "MagicTools.Menu.MenuExtrasReload",
+			name: "Enable 'Reload Node' in Node Menu",
+			type: "boolean",
+			defaultValue: true,
+			onChange: (newVal, oldVal) => {
+				if (oldVal !== undefined && newVal !== oldVal) {
+					showRefreshPrompt();
+				}
+			}
+		});
+		
+		app.ui.settings.addSetting({
+			id: "MagicTools.Menu.MenuExtrasReboot",
+			name: "Enable 'Restart ComfyUI' in Context Menu",
+			type: "boolean",
+			defaultValue: true,
+			onChange: (newVal, oldVal) => {
+				if (oldVal !== undefined && newVal !== oldVal) {
+					showRefreshPrompt();
+				}
+			}
+		});
 
 		app.ui.settings.addSetting({ id: "MagicTools.Timer.ShowTimer", name: "Show Execution Timer", type: "boolean", defaultValue: true, onChange: (value) => { timerVisible = value; if (timerEl) { timerEl.style.display = value ? "flex" : "none"; }} });
 		

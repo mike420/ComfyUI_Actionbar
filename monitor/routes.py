@@ -1,9 +1,9 @@
 import logging
-
 import os
 import sys
 import threading
 import time
+import subprocess
 
 from aiohttp import web
 from server import PromptServer
@@ -33,14 +33,19 @@ async def update_settings(request: web.Request) -> web.Response:
     if "rate" in body:
         new_rate = float(body["rate"])
         old_rate = monitor_instance.rate
-        monitor_instance.rate = new_rate
+        
+        # FIX: Only update and restart if the rate actually changed
+        if new_rate != old_rate:
+            monitor_instance.rate = new_rate
 
-        if new_rate <= 0:
-            monitor_instance.stop()
-        elif old_rate <= 0 and new_rate > 0:
-            monitor_instance.start()
-        elif monitor_instance.is_running:
-            monitor_instance.start()
+            if new_rate <= 0:
+                monitor_instance.stop()
+            elif old_rate <= 0 and new_rate > 0:
+                monitor_instance.start()
+            elif monitor_instance.is_running:
+                # Restart to apply new interval
+                monitor_instance.stop()
+                monitor_instance.start()
 
     return web.json_response({"status": "ok"})
 
@@ -96,12 +101,26 @@ async def update_gpu_settings(request: web.Request) -> web.Response:
     return web.json_response({"status": "ok"})
 
 def restart_comfyui():
-    """Restart ComfyUI by re-executing the current process."""
-    time.sleep(0.5)  # Give time for response to be sent
-    os.execv(sys.executable, [sys.executable] + sys.argv)
+    """Restart ComfyUI using subprocess."""
+    # Give the server ample time to send the 'ok' response and close the socket gracefully
+    time.sleep(3.0) 
+    try:
+        # Use subprocess.Popen with a new process group to detach it
+        if sys.platform == 'win32':
+            subprocess.Popen([sys.executable] + sys.argv, creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
+        else:
+            subprocess.Popen([sys.executable] + sys.argv)
+        
+        # Force kill the current process
+        os._exit(0) 
+    except Exception as e:
+        logger.error(f"Restart failed: {e}")
 
 @PromptServer.instance.routes.post("/magictools/restart")
 async def restart_server(request):
     """API endpoint to restart the server."""
-    threading.Thread(target=restart_comfyui, daemon=True).start()    
-    return web.json_response({"status": "ok"})
+    # Start the thread
+    threading.Thread(target=restart_comfyui, daemon=True).start()   
+    
+    # Return immediately so the browser gets the 200 OK
+    return web.json_response({"status": "restarting"})

@@ -2,6 +2,8 @@
 .tracking
 LICENSE
 README.md
+pyproject.toml
+requirements.txt
 __init__.py
 img/magic_mike.jpg
 img/bar.png
@@ -12,4 +14,4 @@ monitor/hardware.py
 monitor/routes.py
 web/systemMonitor.css
 web/systemMonitor.js
-pyproject.toml
+web/menu_extras.js

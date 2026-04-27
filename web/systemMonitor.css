@@ -80,7 +80,7 @@
     display: flex;
     gap: 4px;
     align-items: center;
-    margin-left: 8px;
+    margin-left: 0px;
 }
 
 .sys-btn {
@@ -113,6 +113,7 @@
 .sys-btn#btn-settings {
     background: #076b0f;
     color: #eee;
+    margin-left: 8px;
 }
 
 .sys-btn#btn-restart-comfyui {
